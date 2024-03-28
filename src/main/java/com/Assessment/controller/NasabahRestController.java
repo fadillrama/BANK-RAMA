@@ -15,8 +15,12 @@ public class NasabahRestController {
 
     @GetMapping("/{noKtp}")
     public ResponseEntity<Object> getOneNasabah(@PathVariable(required = true) String noKtp){
-        var dto = service.getOneNasabah(noKtp);
-        return ResponseEntity.status(HttpStatus.OK).body(dto);
+        try {
+            var dto = service.getOneNasabah(noKtp);
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
+        } catch (Exception exception){
+            return ResponseEntity.status(500).body("No value present");
+        }
     }
 
     @GetMapping

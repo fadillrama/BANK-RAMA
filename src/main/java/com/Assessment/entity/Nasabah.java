@@ -4,36 +4,34 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Table(name = "Nasabah")
+@Table(name = "nasabah")
 @Entity
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Nasabah {
     @Id
-    @Column(name = "NoKTP")
+    @Column(name = "no_ktp")
     private String noKtp;
 
-    @Column(name = "NamaLengkap")
+    @Column(name = "nama_lengkap")
     private String namaLengkap;
 
-    @Column(name = "TempatLahir")
+    @Column(name = "tempat_lahir")
     private String tempatLahir;
 
-    @Column(name = "TanggalLahir")
+    @Column(name = "tanggal_lahir")
     private LocalDate tanggalLahir;
 
-    @Column(name = "Alamat")
+    @Column(name = "alamat")
     private String alamat;
 
-    @Column(name = "NoHandphone")
+    @Column(name = "no_handphone")
     private String noHandphone;
 }
