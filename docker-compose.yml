@@ -17,7 +17,7 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
     ports:
-      - "8181:8080"
+      - "8080:8080"
 
   db:
     image: postgres
@@ -27,4 +27,4 @@ services:
       - POSTGRES_PASSWORD=indocyber
 #      - POSTGRES_DB=postgres
     ports:
-      - "5433:5432"
+      - "5432:5432"
