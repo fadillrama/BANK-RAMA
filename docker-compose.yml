@@ -5,7 +5,7 @@ services:
 #    image: 'docker-spring-boot-postgres:latest'
     build:
       context: .
-    container_name: app
+    container_name: spring-app
     depends_on:
       - db
     environment:
@@ -21,7 +21,7 @@ services:
 
   db:
     image: postgres
-    container_name: db
+    container_name: postgre-db
     environment:
 #      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=indocyber
