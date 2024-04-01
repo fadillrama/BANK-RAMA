@@ -2,29 +2,35 @@ version: '3.8'
 
 services:
   app:
-#    image: 'docker-spring-boot-postgres:latest'
     build:
       context: .
     container_name: spring-app
     depends_on:
       - db
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=indocyber
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=indocyber
+      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@db:1521/xe
+      - SPRING_DATASOURCE_USERNAME=SYS AS SYSDBA
+      - SPRING_DATASOURCE_PASSWORD=oracle
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=oracle.jdbc.OracleDriver
+      - TZ=Asia/Jakarta
 
     ports:
-      - "8080:8080"
+      - "8181:8080"
 
   db:
-    image: postgres
-    container_name: postgre-db
-    environment:
-#      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=indocyber
-#      - POSTGRES_DB=postgres
+    image: oracleinanutshell/oracle-xe-11g:latest
+    container_name: oracle-db
     ports:
-      - "5432:5432"
+      - "1522:1521"
+    environment:
+      - ORACLE_ALLOW_REMOTE=true
+      - ORACLE_PASSWORD=oracle
+      - ORACLE_DB=xe
+      - ORACLE_CHARACTERSET=AL32UTF8
+      - ORACLE_ENABLE_XDB=true
+      - ORACLE_DISABLE_APEX=true
+      - ORACLE_DISABLE_APEX_LISTENER=true
+      - ORACLE_DISABLE_PASSWORD_OPEN_TIME=false
+      - ORACLE_PASSWORD_EXPIRE=false
+      #- ORACLE_PASSWORD_LOCK_TIME=false
