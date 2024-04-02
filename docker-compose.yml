@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   app:
-    network_mode: host
     build:
       context: .
       dockerfile: Dockerfile
@@ -21,10 +20,9 @@ services:
       - "8181:8080"
 
   db:
-    network_mode: host
     image: oracleinanutshell/oracle-xe-11g:latest
     container_name: oracle-db
-    ports:
+    ports:s
       - "1522:1521"
     environment:
       - ORACLE_ALLOW_REMOTE=true
