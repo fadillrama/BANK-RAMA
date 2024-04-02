@@ -16,12 +16,15 @@ public class NasabahService {
     public ResponseListDTO getAllNasabah(){
         var nasabahList = nasabahRepository.getAllNasabah();
         var response = new ResponseListDTO();
-        response.setStatusCode(200);
-        response.setStatus("Succeed");
+
         if (nasabahList.isEmpty()) {
+            response.setStatusCode(500);
+            response.setStatus("Failed");
             response.setMessage("No data");
             return response;
         }
+        response.setStatusCode(200);
+        response.setStatus("Succeed");
         response.setMessage("Get all Data");
         response.setData(nasabahList);
         return response;
@@ -31,8 +34,6 @@ public class NasabahService {
         var entity = nasabahRepository.findById(noKtp);
 
         var response = new ResponseEntityDTO();
-        response.setStatusCode(200);
-        response.setStatus("Succeed");
 
         if (entity.isEmpty()) {
             response.setStatusCode(500);
@@ -49,7 +50,8 @@ public class NasabahService {
                     entity.get().getAlamat(),
                     entity.get().getNoHandphone()
             );
-
+            response.setStatusCode(200);
+            response.setStatus("Succeed");
             response.setMessage("Get one Data");
             response.setData(responseEntity);
             return response;
@@ -57,40 +59,47 @@ public class NasabahService {
     }
 
     public ResponseDeleteDTO deleteNasabah(String noKtp){
+        var entity = nasabahRepository.findById(noKtp);
+        var response = new ResponseDeleteDTO();
+        if (entity.isEmpty()){
+            response.setStatusCode(500);
+            response.setStatus("Failed");
+            response.setMessage(String.format("Id %s Undefined", noKtp));
+            response.setId(noKtp);
+            return response;
+        }
         nasabahRepository.deleteById(noKtp);
-        return new ResponseDeleteDTO(
-                200,
-                "Succeed",
-                String.format("Id %s Deleted", noKtp),
-                noKtp
-
-        );
+        response.setStatusCode(200);
+        response.setStatus("Succeed");
+        response.setMessage(String.format("Id %s Deleted", noKtp));
+        response.setId(noKtp);
+        return response;
     }
 
     public ResponseInsertDTO insertNasabah(PutNasabahDTO dto){
-        var entity = new Nasabah();
-        entity.setNoKtp(dto.getNoKtp());
-        entity.setNamaLengkap(dto.getNamaLengkap());
-        entity.setTempatLahir(dto.getTempatLahir());
-        entity.setTanggalLahir(dto.getTanggalLahir());
-        entity.setAlamat(dto.getAlamat());
-        entity.setNoHandphone(dto.getNoHandphone());
+        var nasabah = new Nasabah();
+        nasabah.setNoKtp(dto.getNoKtp());
+        nasabah.setNamaLengkap(dto.getNamaLengkap());
+        nasabah.setTempatLahir(dto.getTempatLahir());
+        nasabah.setTanggalLahir(dto.getTanggalLahir());
+        nasabah.setAlamat(dto.getAlamat());
+        nasabah.setNoHandphone(dto.getNoHandphone());
 
-        var response = nasabahRepository.save(entity);
-        var responseDto = new NasabahDTO(
-                response.getNoKtp(),
-                response.getNamaLengkap(),
-                response.getTempatLahir(),
-                response.getTanggalLahir(),
-                response.getAlamat(),
-                response.getNoHandphone()
+        var responseNasabah = nasabahRepository.save(nasabah);
+        var entity = new NasabahDTO(
+                responseNasabah.getNoKtp(),
+                responseNasabah.getNamaLengkap(),
+                responseNasabah.getTempatLahir(),
+                responseNasabah.getTanggalLahir(),
+                responseNasabah.getAlamat(),
+                responseNasabah.getNoHandphone()
         );
 
         return new ResponseInsertDTO(
                 200,
                 "Succeed",
                 "Data Updated",
-                responseDto
+                entity
         );
     }
 }

@@ -25,6 +25,7 @@ services:
       - "1522:1521"
     environment:
       - ORACLE_ALLOW_REMOTE=true
+      - ORACLE_DISABLE_ASYNCH_IO=false
       - ORACLE_PASSWORD=oracle
       - ORACLE_DB=xe
       - ORACLE_CHARACTERSET=AL32UTF8

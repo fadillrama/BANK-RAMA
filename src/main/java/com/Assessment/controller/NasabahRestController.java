@@ -1,6 +1,7 @@
 package com.Assessment.controller;
 
 import com.Assessment.dto.PutNasabahDTO;
+import com.Assessment.dto.ResponseFailedInsertDTO;
 import com.Assessment.dto.ResponseInsertDTO;
 import com.Assessment.service.NasabahService;
 import jakarta.validation.Valid;
@@ -19,33 +20,33 @@ public class NasabahRestController extends AbstractRestController{
     @GetMapping("/{noKtp}")
     public ResponseEntity<Object> getOneNasabah(@PathVariable(required = true) String noKtp){
         var dto = service.getOneNasabah(noKtp);
-        return ResponseEntity.status(HttpStatus.OK).body(dto);
+        return ResponseEntity.status(dto.getStatusCode()).body(dto);
     }
 
     @GetMapping
     public ResponseEntity<Object> getAllNasabah(){
-        var dto = service.getAllNasabah();
-        return ResponseEntity.status(HttpStatus.OK).body(dto);
+        var response = service.getAllNasabah();
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @DeleteMapping("/{noKtp}")
     public ResponseEntity<Object> deleteNasabah(@PathVariable(required = true) String noKtp){
         var response = service.deleteNasabah(noKtp);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @PutMapping
     public ResponseEntity<Object> putNasabah(@Valid @RequestBody PutNasabahDTO dto, BindingResult bindingResult){
         if (!bindingResult.hasErrors()){
             var response = service.insertNasabah(dto);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseEntity.status(response.getStatusCode()).body(response);
         }
-        var response = new ResponseInsertDTO(
+        var response = new ResponseFailedInsertDTO(
                 422,
                 "Failed",
-                "One of the field is Empty",
+                getErrors(bindingResult.getAllErrors()),
                 null
         );
-        return ResponseEntity.status(422).body(response);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 }

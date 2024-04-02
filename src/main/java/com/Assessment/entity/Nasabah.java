@@ -8,7 +8,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Table(name = "nasabah")
+@Table(name = "NASABAH")
 @Entity
 @Setter
 @Getter
@@ -17,21 +17,21 @@ import java.time.LocalDate;
 @Builder
 public class Nasabah {
     @Id
-    @Column(name = "no_ktp")
+    @Column(name = "NOKTP")
     private String noKtp;
 
-    @Column(name = "nama_lengkap")
+    @Column(name = "NAMALENGKAP")
     private String namaLengkap;
 
-    @Column(name = "tempat_lahir")
+    @Column(name = "TEMPATLAHIR")
     private String tempatLahir;
 
-    @Column(name = "tanggal_lahir")
+    @Column(name = "TANGGALLAHIR")
     private LocalDate tanggalLahir;
 
-    @Column(name = "alamat")
+    @Column(name = "ALAMAT")
     private String alamat;
 
-    @Column(name = "no_handphone")
+    @Column(name = "NOHANDPHONE")
     private String noHandphone;
 }
