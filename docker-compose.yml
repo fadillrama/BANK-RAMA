@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   app:
+    network_mode: host
     build:
       context: .
     container_name: spring-app
@@ -19,6 +20,7 @@ services:
       - "8181:8080"
 
   db:
+    network_mode: host
     image: oracleinanutshell/oracle-xe-11g:latest
     container_name: oracle-db
     ports:
