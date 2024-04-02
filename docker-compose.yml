@@ -22,7 +22,7 @@ services:
   db:
     image: oracleinanutshell/oracle-xe-11g:latest
     container_name: oracle-db
-    ports:s
+    ports:
       - "1522:1521"
     environment:
       - ORACLE_ALLOW_REMOTE=true
