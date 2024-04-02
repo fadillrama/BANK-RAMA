@@ -5,6 +5,7 @@ services:
     network_mode: host
     build:
       context: .
+      dockerfile: Dockerfile
     container_name: spring-app
     depends_on:
       - db
